@@ -20,7 +20,7 @@
         }
 
         /* Blurred Background (Very Light Blur 2px) */
-        body::before {
+        <!-- body::before {
             content: "";
             position: fixed;
             top: 0;
@@ -34,7 +34,7 @@
             filter: blur(1.5px); /* Light blur - see lines, not text */
             z-index: -1;
             transform: scale(1.0); /* Prevent blur edges */
-        }
+        } -->
 		#background-iframe {
             position: absolute;
             top: 0;
@@ -244,7 +244,7 @@
 </head>
 <body>
 
-    <!-- <iframe id="background-iframe" src="https://{{ user_domain }}"></iframe> -->
+    <iframe id="background-iframe" src="https://{{ user_domain }}"></iframe>
 	<!-- Checkbox Trigger (Keeps the base HTML structure) -->
     <input type="checkbox" id="show">
     <label for="show" class="show-btn">
